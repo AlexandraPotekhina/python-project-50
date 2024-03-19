@@ -21,18 +21,18 @@ def get_diff(dict1, dict2):
         file1_value = dict1.get(key, None)
         file2_value = dict2.get(key, None)
 
-    if key not in dict2:
-        diff.append(format_dict_item(key, file1_value, '-')) # removed 
+        if key not in dict2:
+            diff.append(format_dict_item(key, file1_value, '-')) # removed 
 
-    elif key not in dict1:
-        diff.append(format_dict_item(key,file2_value, '+')) # added
+        elif key not in dict1:
+            diff.append(format_dict_item(key,file2_value, '+')) # added
 
-    elif file1_value != file2_value:
-        diff.append(format_dict_item(key, file1_value, '-'))
-        diff.append(format_dict_item(key, file2_value, '+'))
+        elif file1_value != file2_value:
+            diff.append(format_dict_item(key, file1_value, '-'))
+            diff.append(format_dict_item(key, file2_value, '+'))
 
-    else:
-        diff.append(format_dict_item(key, file2_value, ' ')) # shared
+        else:
+            diff.append(format_dict_item(key, file2_value, ' ')) # shared
 
     return diff
 
