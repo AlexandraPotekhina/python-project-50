@@ -16,8 +16,9 @@ def format_dict_item(key, value, sign):
 def get_diff(dict1, dict2):
 
     diff = []
+    all_keys = set(dict1.keys()) | set(dict2.keys())
 
-    for key in sorted(dict1 | dict2):
+    for key in sorted(all_keys):
         file1_value = dict1.get(key, None)
         file2_value = dict2.get(key, None)
 
