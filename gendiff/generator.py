@@ -16,29 +16,29 @@ def format_dict_item(key, value, sign):
 def get_diff(dict1, dict2):
 
     diff = []
-  
+
     for key in sorted(dict1 | dict2):
         file1_value = dict1.get(key, None)
         file2_value = dict2.get(key, None)
 
         if key not in dict2:
-            diff.append(format_dict_item(key, file1_value, '-')) # removed 
+            diff.append(format_dict_item(key, file1_value, '-'))  # removed
 
         elif key not in dict1:
-            diff.append(format_dict_item(key,file2_value, '+')) # added
+            diff.append(format_dict_item(key, file2_value, '+'))  # added
 
         elif file1_value != file2_value:
             diff.append(format_dict_item(key, file1_value, '-'))
             diff.append(format_dict_item(key, file2_value, '+'))
 
         else:
-            diff.append(format_dict_item(key, file2_value, ' ')) # shared
+            diff.append(format_dict_item(key, file2_value, ' '))  # shared
 
     return diff
 
 
 def gen_diff_string(diff_list):
-  
+
     return '{\n' + '\n'.join(diff_list) + '\n}'
 
 
