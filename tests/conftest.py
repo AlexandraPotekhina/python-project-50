@@ -8,5 +8,5 @@ def file1():
 
 
 @pytest.fixture
-def file1():
+def file2():
     return json.load(open('tests/fixtures/file2.json'))
