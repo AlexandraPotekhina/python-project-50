@@ -1,4 +1,10 @@
-import json
+from gendiff.parser import parse_dict
+
+
+ADDED = '+'
+REMOVED = '-'
+MODIFIED = '±' 
+SHARED = ' '
 
 
 def format_value(value):
@@ -8,34 +14,13 @@ def format_value(value):
     return str(value)
 
 
-def format_dict_item(key, value, sign):
-    formatted_value = format_value(value)
-    return f"  {sign} {key}: {formatted_value}"
-
-
-def get_diff(dict1, dict2):
-
-    diff = []
-    all_keys = set(dict1.keys()) | set(dict2.keys())
-
-    for key in sorted(all_keys):
-        file1_value = dict1.get(key, None)
-        file2_value = dict2.get(key, None)
-
-        if key not in dict2:
-            diff.append(format_dict_item(key, file1_value, '-'))  # removed
-
-        elif key not in dict1:
-            diff.append(format_dict_item(key, file2_value, '+'))  # added
-
-        elif file1_value != file2_value:
-            diff.append(format_dict_item(key, file1_value, '-'))
-            diff.append(format_dict_item(key, file2_value, '+'))
-
-        else:
-            diff.append(format_dict_item(key, file2_value, ' '))  # shared
-
-    return diff
+def format_dict_item(key, tag, value):
+  
+    if tag == MODIFIED:
+        return [f"  - {key}: {format_value(value[0])}", 
+                f"  + {key}: {format_value(value[1])}"]
+    
+    return [f"  {tag} {key}: {format_value(value)}"]
 
 
 def gen_diff_string(diff_list):
@@ -43,10 +28,35 @@ def gen_diff_string(diff_list):
     return '{\n' + '\n'.join(diff_list) + '\n}'
 
 
-def generate_diff(file_path1, file_path2):
-    file1 = json.load(open(file_path1))
-    file2 = json.load(open(file_path2))
+def get_diff(object1, object2):
+        
+    for key in sorted(object1 | object2):
+        val1, val2 = object1.get(key, object()), object2.get(key, object())
 
-    diff = get_diff(file1, file2)
+        if key not in object2:
+            yield REMOVED, key, val1
+
+        elif key not in object1:
+            yield ADDED, key, val2
+
+        elif val1 == val2:
+            yield SHARED, key, val2
+
+        elif val1 != val2:
+            yield MODIFIED, key, (val1, val2)
+
+
+def format_diff(dict1, dict2):
+  
+    for difference in get_diff(dict1, dict2):
+        yield from format_dict_item(difference)
+
+
+def gen_diff(file1, file2):
+
+    file1 = parse_dict(file1)
+    file1 = parse_dict(file2)
+
+    diff = format_diff(file1, file2)
 
     return gen_diff_string(diff)
