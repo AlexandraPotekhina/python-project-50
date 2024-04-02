@@ -9,6 +9,6 @@ def parse_dict(filepath):
 
     if filepath.endswith('.json'):
         with open(filepath, 'r') as file:
-            parsed_dict = json.load(open(file))
+            parsed_dict = json.load(file)
 
     return parsed_dict
