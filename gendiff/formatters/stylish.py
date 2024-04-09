@@ -1,4 +1,5 @@
-from itertools import chain
+from gendiff.constants import (ADDED, REMOVED, MODIFIED, SHARED)
+
 
 def format_string(diff_dict, depth=0, space_count=4):
   output = []

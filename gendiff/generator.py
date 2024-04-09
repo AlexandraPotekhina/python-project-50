@@ -1,10 +1,5 @@
 from gendiff.parser import parse_dict
-
-
-ADDED = '+'
-REMOVED = '-'
-MODIFIED = '±' 
-SHARED = ' '
+from gendiff.constants import (ADDED, REMOVED, MODIFIED, SHARED)
 
 
 def format_value(value):
