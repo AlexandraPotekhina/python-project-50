@@ -1,4 +1,5 @@
 ADDED = '+'
 REMOVED = '-'
-MODIFIED = '±' 
+MODIFIED = 'modified' 
 SHARED = ' '
+NESTED = 'nested'
