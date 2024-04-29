@@ -1,9 +1,10 @@
-from gendiff.constants import (ADDED, REMOVED, MODIFIED, SHARED, NESTED)
+# from gendiff.constants import (ADDED, REMOVED, MODIFIED, SHARED, NESTED)
+
 
 def format_value(value):
     if isinstance(value, bool):
         return str(value).lower()
-    
+
     if value in [int, float]:
         return str(value)
 
@@ -23,10 +24,10 @@ def get_diff_dict(difference):
 
         elif tag == 'modified':
             new_dict[key[-1]] = {'type': tag,
-                           'from': format_value(value[0]),
-                           'to': format_value(value[1])}
+                                 'from': format_value(value[0]),
+                                 'to': format_value(value[1])}
 
-        else: 
+        else:
             new_dict[key[-1]] = {'type': tag, 'value': format_value(value)}
-    
+
     return new_dict

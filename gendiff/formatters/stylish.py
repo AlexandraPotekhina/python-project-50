@@ -37,4 +37,3 @@ def format_child(child, depth=0, space_count=4):
             f"{indent}    {key}: {format_child(value, depth + 1)}"
         )
     return '{\n' + '\n'.join(result) + '\n' + indent + '}'
-  
