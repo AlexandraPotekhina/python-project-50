@@ -5,8 +5,6 @@ from gendiff.constants import (ADDED, REMOVED, MODIFIED, SHARED, NESTED)
 
 def get_diff(dict1, dict2, node=[]):
 
-    # def walk(object1, object2, node=[]):
-
     for key in sorted(dict1.keys() | dict2.keys()):
         val1, val2 = dict1.get(key, object()), dict2.get(key, object())
         new_node = node + [key]
@@ -22,8 +20,6 @@ def get_diff(dict1, dict2, node=[]):
             yield SHARED, new_node, val2
         elif val1 != val2:
             yield MODIFIED, new_node, (val1, val2)
-
-    # return walk(dict1, dict2)
 
 
 def generate_diff(file1, file2, formatter_style='stylish'):

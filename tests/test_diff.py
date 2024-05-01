@@ -54,14 +54,14 @@ def test_diff_nested_yml():
 
 
 def test_diff_plain():
-    expected_path = 'tests/fixtures/result_plain.txt'
+    expected_path = 'tests/fixtures/plain_result.txt'
     dict_1_path = 'tests/fixtures/file_nested1.json'
     dict_2_path = 'tests/fixtures/file_nested2.json'
 
     with open(expected_path, 'r') as file:
         expected = file.read()
 
-    result = generate_diff(dict_1_path, dict_2_path)
+    result = generate_diff(dict_1_path, dict_2_path, formatter_style='plain')
 
     assert result == expected
 
