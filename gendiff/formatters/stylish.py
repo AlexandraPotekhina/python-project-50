@@ -2,38 +2,56 @@ from gendiff.constants import (ADDED, REMOVED, MODIFIED, SHARED, NESTED)
 from itertools import chain
 
 
-def format_string(diff_dict, depth=0, space_count=4):
-    output = []
-    indent = ' ' * (depth * space_count)
+def format_value(value, depth=0, space_count=4):
 
-    for dict_key, dict_value in diff_dict.items():
-        output_val = dict_value.get('value')
-        output_tag = dict_value.get('type')
+    if isinstance(value, bool):
+        return str(value).lower()
 
-        if output_tag == NESTED:
-            nested = format_string(output_val, depth + 1)
-            output.append(f"{indent}  {SHARED} {dict_key}: {nested}")
+    if value in [int, float]:
+      return str(value)
 
-        elif output_tag == MODIFIED:
-            output.extend([f"{indent}  {REMOVED} {dict_key}: {format_child(dict_value.get('from'), depth + 1)}",
-                           f"{indent}  {ADDED} {dict_key}: {format_child(dict_value.get('to'), depth + 1)}"])
+    if value is None:
+        return 'null'
 
-        else:
-            output.append(f"{indent}  {output_tag} {dict_key}: {format_child(output_val, depth + 1)}")
+    if isinstance(value, dict):
+      return format_child(value, depth, space_count)
 
-        result = list(chain('{', output, [indent + '}']))
-    return '\n'.join(result)
+    return value
+
+
+def get_diff_dict(difference, depth=0, space_count=4):
+
+  output = []
+  indent = ' ' * (depth * space_count)
+
+  for tag, key_list, value in difference:
+  
+    key = key_list[-1] if key_list else None
+
+    if tag == 'nested':
+      
+      output.append(f"{indent}  {SHARED} {key}: {get_diff_dict(value, depth + 1)}")
+
+    elif tag == 'modified':
+      output.extend([f"{indent}  {REMOVED} {key}: {format_value(value[0], depth + 1)}",
+                     f"{indent}  {ADDED} {key}: {format_value(value[1], depth + 1)}"])
+
+    else:
+      output.append(f"{indent}  {tag} {key}: {format_value(value, depth + 1)}")
+
+  output.append(f"{indent}}}")
+
+  return '{\n' + '\n'.join(output)
 
 
 def format_child(child, depth=0, space_count=4):
-    if not isinstance(child, dict):
-        return child
 
-    result = []
-    indent = ' ' * (depth * space_count)
+  result = []
+  indent = ' ' * (depth * space_count)
 
-    for key, value in child.items():
-        result.append(
-            f"{indent}    {key}: {format_child(value, depth + 1)}"
-        )
-    return '{\n' + '\n'.join(result) + '\n' + indent + '}'
+  for key, value in child.items():
+
+    formatted_value = format_value(value, depth + 1, space_count)
+    result.append(f"{indent}    {key}: {formatted_value}")
+
+  return '{\n' + '\n'.join(result) + '\n' + indent + '}' 
