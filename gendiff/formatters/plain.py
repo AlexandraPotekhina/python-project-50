@@ -8,10 +8,8 @@ def format_value_plain(value):
         return 'null'
     if isinstance(value, dict):
         return "[complex value]"
-    if isinstance(value, str):
-        return f"'{value}'"
 
-    return value
+    return f"'{value}'"
 
 
 def format_string(difference):
