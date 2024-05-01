@@ -3,14 +3,12 @@ from gendiff.constants import (ADDED, REMOVED, MODIFIED, SHARED, NESTED)
 
 def format_value(value, depth=0, space_count=4):
 
-    if isinstance(value, bool):
+    if isinstance(value, (bool, int, float)):
         return str(value).lower()
-    if value in [int, float]:
-        return str(value)
-    if value is None:
-        return 'null'
-    if isinstance(value, dict):
+    elif isinstance(value, dict):
         return format_child(value, depth, space_count)
+    elif value is None:
+        return 'null'
 
     return value
 

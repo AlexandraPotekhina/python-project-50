@@ -1,15 +1,13 @@
 def format_value_plain(value):
 
-    if isinstance(value, bool):
+    if isinstance(value, (bool, int, float)):
         return str(value).lower()
-    if isinstance(value, (int, float)):
-        return str(value)
-    if value is None:
-        return 'null'
-    if isinstance(value, dict):
+    elif isinstance(value, dict):
         return "[complex value]"
-
-    return f"'{value}'"
+    elif isinstance(value, str):
+        return f"'{value}'"
+    elif value is None:
+        return 'null'
 
 
 def format_string(difference):
