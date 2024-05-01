@@ -1,6 +1,5 @@
 from gendiff.parser import parse_dict
 from gendiff.formatters import get_formatter
-from gendiff.dict_builder import get_diff_dict
 from gendiff.constants import (ADDED, REMOVED, MODIFIED, SHARED, NESTED)
 
 
@@ -32,9 +31,6 @@ def generate_diff(file1, file2, formatter_style='stylish'):
     file2 = parse_dict(file2)
 
     diff = get_diff(file1, file2)
-
-    diff_dict = get_diff_dict(diff)
-
     formatter = get_formatter(formatter_style)
 
-    return formatter(diff_dict)
+    return formatter(diff)
