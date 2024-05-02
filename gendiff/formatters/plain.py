@@ -1,4 +1,4 @@
-def format_value_plain(value):
+def format_value(value):
 
     if isinstance(value, (bool, int, float)):
         return str(value).lower()
@@ -19,15 +19,15 @@ def format_string(difference):
         elif tag == '+':
             result.append(
                 f"Property '{'.'.join(key)}' was added with value: "
-                f"{format_value_plain(value)}"
+                f"{format_value(value)}"
             )
         elif tag == '-':
             result.append(f"Property '{'.'.join(key)}' was removed")
         elif tag == 'modified':
             result.append(
                 f"Property '{'.'.join(key)}' was updated. "
-                f"From {format_value_plain(value[0])} "
-                f"to {format_value_plain(value[1])}"
+                f"From {format_value(value[0])} "
+                f"to {format_value(value[1])}"
             )
 
     return '\n'.join(result)

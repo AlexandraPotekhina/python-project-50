@@ -1,8 +1,36 @@
 import json
-from gendiff.formatters import stylish
 
+
+def get_diff_dict(difference):
+
+    new_dict = {}
+
+    for tag, key, value in difference:
+        if tag == 'nested':
+            new_dict[key[-1]] = get_diff_dict(value)
+        elif tag == 'modified':
+            new_dict[key[-1]] = {
+                'type': tag,
+                'old_value': value[0],
+                'new_value': value[1]
+            }
+        elif tag == '+':
+            new_dict[key[-1]] = {
+                'type': 'added',
+                'new_value': value
+            }
+
+        elif tag == '-':
+            new_dict[key[-1]] = {
+                'type': 'removed',
+                'old_value': value
+            }
+        elif tag == ' ':
+            new_dict[key[-1]] = value
+            
+    return new_dict
 
 def format_string(difference):
-    diff = stylish.format_string(difference, depth=0, space_count=4)
+    diff = get_diff_dict(difference)
 
-    return json.dumps(diff)
+    return json.dumps(diff, indent=2)
