@@ -1,68 +1,27 @@
+import pytest
 from gendiff import generate_diff
 
+@pytest.mark.parametrize("path1, path2, expected_result, output_format", [
+     ('tests/fixtures/flat1.json', 'tests/fixtures/flat2.json', 'tests/fixtures/diff_flat_stylish.txt', None),
+     ('tests/fixtures/flat1.yml', 'tests/fixtures/flat2.yml', 'tests/fixtures/diff_flat_stylish.txt', None),
+     ('tests/fixtures/flat1.json', 'tests/fixtures/flat2.yml', 'tests/fixtures/diff_flat_stylish.txt', None),
+     ('tests/fixtures/nested1.json', 'tests/fixtures/nested2.json', 'tests/fixtures/diff_nested_stylish.txt', None),
+     ('tests/fixtures/nested1.yml', 'tests/fixtures/nested2.yml', 'tests/fixtures/diff_nested_stylish.txt', None),
+     ('tests/fixtures/nested1.json', 'tests/fixtures/nested2.yml', 'tests/fixtures/diff_nested_stylish.txt', None),
+     ('tests/fixtures/nested1.json', 'tests/fixtures/nested2.json', 'tests/fixtures/diff_nested_plain.txt', 'plain'),
+     ('tests/fixtures/nested1.yml', 'tests/fixtures/nested2.yml', 'tests/fixtures/diff_nested_plain.txt', 'plain'),
+     ('tests/fixtures/nested1.json', 'tests/fixtures/nested2.yml', 'tests/fixtures/diff_nested_plain.txt', 'plain'),
+     ('tests/fixtures/nested1.json', 'tests/fixtures/nested2.json', 'tests/fixtures/diff_nested.json', 'json'),
+     ('tests/fixtures/nested1.yml', 'tests/fixtures/nested2.yml', 'tests/fixtures/diff_nested.json', 'json'),
+     ('tests/fixtures/nested1.json', 'tests/fixtures/nested2.yml', 'tests/fixtures/diff_nested.json', 'json')
+ ])
 
-def test_diff_plain_json():
-    expected_path = 'tests/fixtures/plain_json_result.txt'
-    dict_1_path = 'tests/fixtures/file1.json'
-    dict_2_path = 'tests/fixtures/file2.json'
 
-    with open(expected_path, 'r') as file:
+def test_generate_diff(path1, path2, expected_result, output_format):
+    
+    with open(expected_result, 'r') as file:
         expected = file.read()
 
-    result = generate_diff(dict_1_path, dict_2_path)
+    result = generate_diff(path1, path2, output_format)
 
     assert result == expected
-
-
-def test_diff_plain_yml():
-    expected_path = 'tests/fixtures/plain_json_result.txt'
-    dict_1_path = 'tests/fixtures/file1.yml'
-    dict_2_path = 'tests/fixtures/file2.yml'
-
-    with open(expected_path, 'r') as file:
-        expected = file.read()
-
-    result = generate_diff(dict_1_path, dict_2_path)
-
-    assert result == expected
-
-
-def test_diff_nested_json():
-    expected_path = 'tests/fixtures/result_nested.txt'
-    dict_1_path = 'tests/fixtures/file_nested1.json'
-    dict_2_path = 'tests/fixtures/file_nested2.json'
-
-    with open(expected_path, 'r') as file:
-        expected = file.read()
-
-    result = generate_diff(dict_1_path, dict_2_path)
-
-    assert result == expected
-
-
-def test_diff_nested_yml():
-    expected_path = 'tests/fixtures/result_nested.txt'
-    dict_1_path = 'tests/fixtures/file_nested1.yml'
-    dict_2_path = 'tests/fixtures/file_nested2.yml'
-
-    with open(expected_path, 'r') as file:
-        expected = file.read()
-
-    result = generate_diff(dict_1_path, dict_2_path)
-
-    assert result == expected
-
-
-def test_diff_plain():
-    expected_path = 'tests/fixtures/plain_result.txt'
-    dict_1_path = 'tests/fixtures/file_nested1.json'
-    dict_2_path = 'tests/fixtures/file_nested2.json'
-
-    with open(expected_path, 'r') as file:
-        expected = file.read()
-
-    result = generate_diff(dict_1_path, dict_2_path, formatter_style='plain')
-
-    assert result == expected
-
-#  @pytest.mark.parametrize
