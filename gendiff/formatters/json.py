@@ -27,7 +27,7 @@ def get_diff_dict(difference):
             }
         elif tag == SHARED:
             new_dict[key[-1]] = value
-            
+
     return new_dict
 
 
