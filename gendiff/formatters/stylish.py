@@ -20,21 +20,17 @@ def format_string(difference, depth=0, space_count=4):
     for tag, key_list, value in difference:
         key = key_list[-1] if key_list else None
         if tag == NESTED:
-            value = format_string(value, depth + 1)
             output.append(
-                f"{indent}  {SHARED} {key}: {value}"
+                f"{indent}  {SHARED} {key}: {format_string(value, depth + 1)}"
             )
         elif tag == MODIFIED:
-            old_value = format_value(value[0], depth + 1)
-            new_value = format_value(value[1], depth + 1)
             output.extend([
-                f"{indent}  {REMOVED} {key}: {old_value}",
-                f"{indent}  {ADDED} {key}: {new_value}"
+                f"{indent}  {REMOVED} {key}: {format_value(value[0], depth + 1)}",
+                f"{indent}  {ADDED} {key}: {format_value(value[1], depth + 1)}"
             ])
         else:
-            value = format_string(value, depth + 1)
             output.append(
-                f"{indent}  {tag} {key}: {value}"
+                f"{indent}  {tag} {key}: {format_value(value, depth + 1)}"
             )
 
     output.append(f"{indent}}}")
