@@ -15,9 +15,7 @@ from gendiff import generate_diff
     ('tests/fixtures/flat1.yml', 'tests/fixtures/flat2.yml', 'tests/fixtures/diff_flat.json', 'json'),
     ('tests/fixtures/nested1.json', 'tests/fixtures/nested2.json', 'tests/fixtures/diff_nested.json', 'json'),
     ('tests/fixtures/nested1.yml', 'tests/fixtures/nested2.yml', 'tests/fixtures/diff_nested.json', 'json')
-  ])
-
-
+])
 def test_generate_diff(path1, path2, expected_result, output_format):
     with open(expected_result, 'r') as file:
         expected = file.read()

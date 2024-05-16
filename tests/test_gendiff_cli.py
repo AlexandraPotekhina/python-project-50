@@ -1,5 +1,5 @@
 import sys
-import subprocess 
+import subprocess
 from gendiff.scripts.gendiff import parse_arguments
 
 
