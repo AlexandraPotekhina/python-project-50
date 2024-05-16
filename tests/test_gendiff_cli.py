@@ -17,50 +17,42 @@ def test_gendiff_cli():
     result = subprocess.run(['gendiff', '-h'], capture_output=True, text=True)
     assert result.stdout.rstrip() == expected
 
-
     with open('tests/fixtures/diff_flat_stylish.txt') as file:
         expected = file.read()
     result = subprocess.run(['gendiff', 'tests/fixtures/flat1.json', 'tests/fixtures/flat2.json'], capture_output=True, text=True)
     assert result.stdout.rstrip() == expected
 
-
     with open('tests/fixtures/diff_flat_stylish.txt') as file:
         expected = file.read()
-    result = subprocess.run(['gendiff', 'tests/fixtures/flat1.json', 'tests/fixtures/flat2.json',  '-f', 'stylish'], capture_output=True, text=True)
+    result = subprocess.run(['gendiff', 'tests/fixtures/flat1.json', 'tests/fixtures/flat2.json', '-f', 'stylish'], capture_output=True, text=True)
     assert result.stdout.rstrip() == expected
-
 
     with open('tests/fixtures/diff_flat_plain.txt') as file:
         expected = file.read()
-    result = subprocess.run(['gendiff', 'tests/fixtures/flat1.json', 'tests/fixtures/flat2.json',  '-f', 'plain'], capture_output=True, text=True)
+    result = subprocess.run(['gendiff', 'tests/fixtures/flat1.json', 'tests/fixtures/flat2.json', '-f', 'plain'], capture_output=True, text=True)
     assert result.stdout.rstrip() == expected
-
 
     with open('tests/fixtures/diff_flat.json') as file:
         expected = file.read()
-    result = subprocess.run(['gendiff', 'tests/fixtures/flat1.json', 'tests/fixtures/flat2.json',  '-f', 'json'], capture_output=True, text=True)
+    result = subprocess.run(['gendiff', 'tests/fixtures/flat1.json', 'tests/fixtures/flat2.json', '-f', 'json'], capture_output=True, text=True)
     assert result.stdout.rstrip() == expected
-
 
     with open('tests/fixtures/diff_nested_stylish.txt') as file:
         expected = file.read()
     result = subprocess.run(['gendiff', 'tests/fixtures/nested1.json', 'tests/fixtures/nested2.json'], capture_output=True, text=True)
     assert result.stdout.rstrip() == expected
 
-
     with open('tests/fixtures/diff_nested_stylish.txt') as file:
         expected = file.read()
-    result = subprocess.run(['gendiff', 'tests/fixtures/nested1.json', 'tests/fixtures/nested2.json',  '-f', 'stylish'], capture_output=True, text=True)
+    result = subprocess.run(['gendiff', 'tests/fixtures/nested1.json', 'tests/fixtures/nested2.json', '-f', 'stylish'], capture_output=True, text=True)
     assert result.stdout.rstrip() == expected
-
 
     with open('tests/fixtures/diff_nested_plain.txt') as file:
         expected = file.read()
-    result = subprocess.run(['gendiff', 'tests/fixtures/nested1.json', 'tests/fixtures/nested2.json',  '-f', 'plain'], capture_output=True, text=True)
+    result = subprocess.run(['gendiff', 'tests/fixtures/nested1.json', 'tests/fixtures/nested2.json', '-f', 'plain'], capture_output=True, text=True)
     assert result.stdout.rstrip() == expected
-
 
     with open('tests/fixtures/diff_nested.json') as file:
         expected = file.read()
-    result = subprocess.run(['gendiff', 'tests/fixtures/nested1.json', 'tests/fixtures/nested2.json',  '-f', 'json'], capture_output=True, text=True)
+    result = subprocess.run(['gendiff', 'tests/fixtures/nested1.json', 'tests/fixtures/nested2.json', '-f', 'json'], capture_output=True, text=True)
     assert result.stdout.rstrip() == expected
