@@ -1,10 +1,10 @@
 import sys
-from subprocess import check_output
+import subprocess 
 from gendiff.scripts.gendiff import parse_arguments
 
 
 def test_parse_arguments():
-    sys.argv = ['genfiff', '--format', 'json', 'flat1.json', 'flat2.json']
+    sys.argv = ['gendiff', '--format', 'json', 'flat1.json', 'flat2.json']
     args = parse_arguments()
     assert args.first_file == 'flat1.json'
     assert args.second_file == 'flat2.json'
@@ -12,7 +12,7 @@ def test_parse_arguments():
 
 
 def test_gendiff_cli():
-    with open('tests/fixtures/help_output.txt') as file:
+    with open('tests/fixtures/help_output.txt', 'r') as file:
         expected = file.read()
-    result = check_output(['gendiff', '-h'], text=True)
-    assert result == expected
+    result = subprocess.run(['gendiff', '-h'], capture_output=True, text=True)
+    assert result.stdout.rstrip() == expected
