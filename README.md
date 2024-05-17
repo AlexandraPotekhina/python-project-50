@@ -12,23 +12,23 @@ Shows difference as a structured text ('stylish', default), plain text ('plain')
 
 ### CLI
 
-'''
+```
 gendiff filepath1 filepath2 [--option]
-'''
+```
 
 -h, --help: shows help message.
 -f, --format: shows difference in one of three formats: 'stylish' (default), 'plain' or 'json'.
 
 ### Gendiff library
 
-'''python
+```python
 from gendiff import generate_diff
 
 diff = generate_diff(filepath1, filepath2)
-'''
+```
 
 ## Installation
 
-'''bash
+```bash
 python3 -m pip install --user git+https//github.com/AlexandraPotekhina/python-project-50.hit
-'''
+```
