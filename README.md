@@ -30,5 +30,5 @@ diff = generate_diff(filepath1, filepath2)
 ## Installation
 
 ```bash
-python3 -m pip install --user git+https//github.com/AlexandraPotekhina/python-project-50.hit
+python3 -m pip install --user git+https://github.com/AlexandraPotekhina/python-project-50.git
 ```
